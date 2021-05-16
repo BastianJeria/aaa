@@ -1,0 +1,42 @@
+
+<ul>
+    <div class="lista">
+        <li *ngFor="let item of listaNotas">
+            <div class="rojo" *ngIf="item.estado === 'abierto'">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="titulo">{{item.titulo}}</span><br>
+                <span class="descripcion">{{item.descripcion}}</span>
+                
+                
+            </div>
+        </li>
+    </div>
+    <div class="lista">
+        <li *ngFor="let item of listaNotas">
+            <div class="verde" *ngIf="item.estado === 'proceso'">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="titulo">{{item.titulo}}</span><br>
+                <span class="descripcion">{{item.descripcion}}</span>
+                
+            </div>
+        </li>
+    </div>
+    <div class="lista">
+        <li *ngFor="let item of listaNotas">
+            <div class="azul" *ngIf="item.estado === 'cerrado'">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="titulo">{{item.titulo}}</span><br>
+                <span class="descripcion">{{item.descripcion}}</span>
+            </div>
+        </li>
+    </div>
+</ul>
+<div class="adicionar">
+    <button class="boton">+  Adicionar</button>
+</div>

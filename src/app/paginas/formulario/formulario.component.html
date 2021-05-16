@@ -1,0 +1,27 @@
+<div class="container-md">
+    <form [formGroup]="formulario" (ngSubmit)="Crear()">
+        <ul>
+            <li>
+                <label>Titulo</label><br>
+                <input class="input" type="text" formControlName="titulo">
+            </li>
+            <li>
+                <label>Estado</label><br>
+                <select class=input name="select" formControlName="estado">
+                    <option value="">Select</option>
+                    <option value="abierto">Abierto</option>
+                    <option value="proceso">En proceso</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
+            </li>
+            <li>
+                <label>Descripcion</label><br>
+                <textarea id = "descripcion" maxlength="300" formControlName="descripcion" ></textarea>
+            </li>
+            <li>
+            <button class="boton" type="submit">Actualizar</button> 
+            </li>
+
+        </ul>
+    </form>
+</div>

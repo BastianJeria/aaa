@@ -1,0 +1,58 @@
+ul{
+    margin-left: 30px;
+    margin-top: 60px;
+    width: 97%;
+    height: 500px;
+    list-style-type: none;
+}
+
+.rojo{
+    width: 350px;
+    padding-left: 5px;
+    background-color: rgb(233, 150, 150);
+    margin-top: 15px;
+    border: 3px violet solid;
+}
+
+.verde{
+    width: 350px;
+    padding-left: 5px;
+    background-color: rgb(200, 235, 179);
+    margin-top: 15px;
+    border: 3px violet solid;
+}
+
+.azul{
+    width: 350px;
+    padding-left: 5px;
+    background-color: rgb(198, 229, 241);
+    margin-top: 15px;
+    border: 3px violet solid;
+}
+
+.titulo{
+    font-weight: 650;
+}
+
+.descripcion{
+    font-weight: normal;
+}
+
+.lista{
+    padding-right: 30px;
+    float: left;
+}
+
+.close{
+    margin-right: 5px;
+    
+}
+
+.adicionar{
+    width: 100%;
+    text-align: center;
+}
+
+.boton{
+    width: 350px;
+}
