@@ -1,113 +1,59 @@
-/*
-
 const express = require('express');
+const bodyParser = require('body-parser')
 const cors=require('cors');
 const app=express();
 const hostname = '127.0.0.1';
-const port = 3011;
+const port = 3025;
 const fs = require('fs');
-
-
-const notas = [];
-
-
-
-app.use(cors());
-
-app.get('/datos', (req:any,res:any)=>{
-    let datos=[{
-        titulo:"entregar tarea de web",
-        estado:"abierto",
-        descripcion:"hacer la tarea y entregarla"
-    },{
-        titulo:"ir a votar",
-        estado:"proceso",
-        descripcion:"ir al local de votacion"
-    
-    },{
-        titulo:"certamen de fisica",
-        estado:"cerrado",
-        descripcion:"estudiar para fisica"
-    },{
-        titulo:"certamen de ingles",
-        estado:"proceso",
-        descripcion:"estudiar para peru"
-    }];
-    res.send(datos);
-});
-
-app.post("/", (req:any,res:any)=>{
-    let notas = req.body; 
-    console.log(notas);
-    res.send('received');
-});
-
+const uuid = require('uuid');
 
 app.listen(port, hostname, () =>{
-    console.log(`Server running at http://${hostname}:${port}/`)
-
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
-*/
+app.use(cors());
 
+app.use(bodyParser.json()); // body en formato json
+app.use(bodyParser.urlencoded({ extended: false })); //body formulario
 
+const json_notas = fs.readFileSync('../notas.json', 'utf-8');
+let notas = JSON.parse(json_notas);
 
-
-
-
-
-
-
-/*
-app.get('/datos', (req:any,res:any)=>{
-    let datos=[{
-        titulo:"entregar tarea de web",
-        estado:"abierto",
-        descripcion:"hacer la tarea y entregarla"
-    },{
-        titulo:"ir a votar",
-        estado:"proceso",
-        descripcion:"ir al local de votacion"
-    
-    },{
-        titulo:"certamen de fisica",
-        estado:"cerrado",
-        descripcion:"estudiar para fisica"
-    },{
-        titulo:"certamen de ingles",
-        estado:"proceso",
-        descripcion:"estudiar para peru"
-    }];
-    res.send(datos);
-});
-*/
-
-/*
-app.get('/', (req:any,res:any)=>{
-    res.render('formulario.component.html', {
-        notas
-    })
-});
-
-app.get('/nuevo', (req:any,res:any)=>{
-    res.render('nuevo');
-})
-
-app.post('/nuevo', (req:any,res:any)=> {
+app.post('/', (req:any,res:any)=> {
     const {titulo, estado, descripcion} = req.body;
-    if(!titulo || !estado || !descripcion){
-        res.status(400).send('pone algo saco wea');
-        return;
-    }
-
     let nuevaNota = {
+        id:uuid.v4(),
         titulo,
         estado,
         descripcion
     }
-
     notas.push(nuevaNota);
-
     const json_notas = JSON.stringify(notas);
-    fs.writeFileSync('backend/notas.json', json_notas, 'utf-8');
+    fs.writeFileSync('../notas.json', json_notas, 'utf-8');
+    res.end();
 });
-*/
+
+
+app.get('/', (req:any,res:any)=>{
+    let lector = fs.readFileSync('../notas.json');
+    let datos = JSON.parse(lector);
+    res.send(datos);
+    res.end();
+});
+
+app.get('/listado', (req:any, res:any) => {
+    console.log(req.body);
+    res.end();
+    /*
+    notas = notas.filter(() => notas.id != req.params.id);
+  
+    // saving data
+    const json_books = JSON.stringify(notas);
+    fs.writeFileSync('src/books.json', json_books, 'utf-8');
+  
+    res.redirect('/')
+    */
+});
+
+
+
+

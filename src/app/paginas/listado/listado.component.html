@@ -1,27 +1,24 @@
-
 <ul>
     <div class="lista">
         <li *ngFor="let item of listaNotas">
             <div class="rojo" *ngIf="item.estado === 'abierto'">
-                <button type="button" class="close" aria-label="Close">
+                <button type="button" class="close" aria-label="Close" (click)="Eliminar(item.id)">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <span class="titulo">{{item.titulo}}</span><br>
                 <span class="descripcion">{{item.descripcion}}</span>
-                
-                
             </div>
         </li>
     </div>
     <div class="lista">
         <li *ngFor="let item of listaNotas">
             <div class="verde" *ngIf="item.estado === 'proceso'">
-                <button type="button" class="close" aria-label="Close">
+                <button type="button" class="close" aria-label="Close" (click)="Eliminar(item.id)">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <span class="titulo">{{item.titulo}}</span><br>
                 <span class="descripcion">{{item.descripcion}}</span>
-                
+
             </div>
         </li>
     </div>
@@ -37,6 +34,10 @@
         </li>
     </div>
 </ul>
+
+
 <div class="adicionar">
-    <button class="boton">+  Adicionar</button>
+    <a [routerLink]="['/']" routerLinkActive="router-link-active">
+        <button class="boton">+ Adicionar</button>
+    </a>
 </div>

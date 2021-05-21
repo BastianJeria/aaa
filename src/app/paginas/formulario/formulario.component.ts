@@ -5,33 +5,43 @@ import {Notas} from '../../notas'
 import { HttpClient} from '@angular/common/http';
 
 
-
 @Component({
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.scss']
 })
 export class FormularioComponent implements OnInit {
-  formulario:FormGroup;
+  formulario: FormGroup;
   listaNotas:Array<Notas>=[];
-  notas:Notas={titulo:"",estado:"",descripcion:""};
-  json:any;
+  notas:Notas={id:"",titulo:"",estado:"",descripcion:""};
 
-  constructor(public fb:FormBuilder, private servicio:ServicioService, private http:HttpClient) {
-    this.formulario=fb.group({
-      titulo:['',Validators.required],
+  constructor(private servicio:ServicioService, private http:HttpClient, public fb:FormBuilder) {
+    this.formulario= fb.group({
+      id:['', Validators.required],
+      titulo:['', Validators.required],
       estado:['',Validators.required],
-      descripcion:['',Validators.required],
-    });
+      descripcion:['',Validators.required]
+    });;
+    /*
     this.http.post('http://httpbin.org/post',this.notas).toPromise().then(data =>{
       console.log(data);
     });
+    */
   }
 
   ngOnInit(): void {
   }
 
   Crear(){
+    this.notas={
+      id:"",
+      titulo:this.formulario.get("titulo")?.value,
+      estado:this.formulario.get("estado")?.value,
+      descripcion:this.formulario.get("descripcion")?.value
+    }
+    this.servicio.Enviar(this.notas).subscribe();
+    location.href = '/listado';
+    /*
     this.notas={
       titulo:this.formulario.get("titulo")?.value,
       estado:this.formulario.get("estado")?.value,
@@ -41,5 +51,6 @@ export class FormularioComponent implements OnInit {
       console.log(notas);
       this.json = notas;
     });
+    */
   }
 }

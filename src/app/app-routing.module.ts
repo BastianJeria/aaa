@@ -5,7 +5,8 @@ import { ListadoComponent } from './paginas/listado/listado.component';
 
 const routes: Routes = [
   {path:'',component:FormularioComponent},
-  {path:'listado',component:ListadoComponent}
+  {path:'listado',component:ListadoComponent},
+  
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
-import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ServicioService} from '../../servicio.service'
 import {Notas} from '../../notas'
+import { isTemplateExpression } from 'typescript';
 
 
 @Component({
@@ -23,4 +24,12 @@ export class ListadoComponent implements OnInit {
       //console.log(datos);
     });  
   }
+
+  Eliminar(id:any){
+    console.log(id);
+    
+    this.servicio.Eliminar(id).subscribe();
+    
+  }
+
 }

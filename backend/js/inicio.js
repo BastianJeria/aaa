@@ -1,98 +1,49 @@
-/*
-
-
 "use strict";
 var express = require('express');
+var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
 var hostname = '127.0.0.1';
-var port = 3011;
+var port = 3025;
 var fs = require('fs');
-var notas = [];
-app.use(cors());
-app.get('/datos', function (req, res) {
-    var datos = [{
-            titulo: "entregar tarea de web",
-            estado: "abierto",
-            descripcion: "hacer la tarea y entregarla"
-        }, {
-            titulo: "ir a votar",
-            estado: "proceso",
-            descripcion: "ir al local de votacion"
-        }, {
-            titulo: "certamen de fisica",
-            estado: "cerrado",
-            descripcion: "estudiar para fisica"
-        }, {
-            titulo: "certamen de ingles",
-            estado: "proceso",
-            descripcion: "estudiar para peru"
-        }];
-    res.send(datos);
-});
-app.post("/", function (req, res) {
-    var notas = req.body;
-    console.log(notas);
-    res.send('received');
-});
+var uuid = require('uuid');
 app.listen(port, hostname, function () {
     console.log("Server running at http://" + hostname + ":" + port + "/");
 });
-
-
-
-
-*/
-/*
-app.get('/datos', (req:any,res:any)=>{
-    let datos=[{
-        titulo:"entregar tarea de web",
-        estado:"abierto",
-        descripcion:"hacer la tarea y entregarla"
-    },{
-        titulo:"ir a votar",
-        estado:"proceso",
-        descripcion:"ir al local de votacion"
-    
-    },{
-        titulo:"certamen de fisica",
-        estado:"cerrado",
-        descripcion:"estudiar para fisica"
-    },{
-        titulo:"certamen de ingles",
-        estado:"proceso",
-        descripcion:"estudiar para peru"
-    }];
-    res.send(datos);
-});
-*/
-/*
-app.get('/', (req:any,res:any)=>{
-    res.render('formulario.component.html', {
-        notas
-    })
-});
-
-app.get('/nuevo', (req:any,res:any)=>{
-    res.render('nuevo');
-})
-
-app.post('/nuevo', (req:any,res:any)=> {
-    const {titulo, estado, descripcion} = req.body;
-    if(!titulo || !estado || !descripcion){
-        res.status(400).send('pone algo saco wea');
-        return;
-    }
-
-    let nuevaNota = {
-        titulo,
-        estado,
-        descripcion
-    }
-
+app.use(cors());
+app.use(bodyParser.json()); // body en formato json
+app.use(bodyParser.urlencoded({ extended: false })); //body formulario
+var json_notas = fs.readFileSync('../notas.json', 'utf-8');
+var notas = JSON.parse(json_notas);
+app.post('/', function (req, res) {
+    var _a = req.body, titulo = _a.titulo, estado = _a.estado, descripcion = _a.descripcion;
+    var nuevaNota = {
+        id: uuid.v4(),
+        titulo: titulo,
+        estado: estado,
+        descripcion: descripcion
+    };
     notas.push(nuevaNota);
-
-    const json_notas = JSON.stringify(notas);
-    fs.writeFileSync('backend/notas.json', json_notas, 'utf-8');
+    var json_notas = JSON.stringify(notas);
+    fs.writeFileSync('../notas.json', json_notas, 'utf-8');
+    res.end();
 });
-*/ 
+app.get('/', function (req, res) {
+    var lector = fs.readFileSync('../notas.json');
+    var datos = JSON.parse(lector);
+    res.send(datos);
+    res.end();
+});
+app.get('/listado', function (req, res) {
+    console.log(req.body);
+    res.end();
+    /*
+    notas = notas.filter(() => notas.id != req.params.id);
+  
+    // saving data
+    const json_books = JSON.stringify(notas);
+    fs.writeFileSync('src/books.json', json_books, 'utf-8');
+  
+    res.redirect('/')
+    */
+});
